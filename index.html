@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ليه؟ | سؤال يستاهل التفكير</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f7f0e7;
+      color: #51202d;
+      font-family: Tahoma, Arial, sans-serif;
+      text-align: center;
+    }
+
+    .card {
+      width: 85%;
+      max-width: 480px;
+      padding: 30px 20px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px #51202d15;
+    }
+
+    h1 {
+      color: #7b263a;
+      font-size: 42px;
+    }
+
+    #question {
+      font-size: 23px;
+      line-height: 1.8;
+      margin: 30px 0;
+    }
+
+    button {
+      background: #7b263a;
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #51202d;
+    }
+
+    .note {
+      color: #88746d;
+      font-size: 13px;
+      margin-top: 25px;
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>ليه؟</h1>
+    <p>سؤال صغير.. ممكن يفتح حكاية كبيرة.</p>
+
+    <div id="question">
+      هو إحنا بنختار اللي بنحبه، ولا بنحب اللي اخترناه؟
+    </div>
+
+    <button onclick="newQuestion()">هات سؤال تاني ←</button>
+
+    <p class="note">مش لازم تجاوب على كل سؤال.. خُد اللي يلمسك وسيب الباقي.</p>
+  </main>
+
+  <script>
+    const questions = [
+      "هو إحنا بنختار اللي بنحبه، ولا بنحب اللي اخترناه؟",
+      "إيه الحاجة اللي نفسك الناس تفهمها عنك من غير ما تشرحها؟",
+      "لو مفيش حد هيحكم عليك، إيه أول حاجة هتعملها؟",
+      "هل كل حاجة بنخسرها كان لازم نخسرها؟",
+      "إمتى آخر مرة غيرت رأيك في شخص تمامًا؟",
+      "هو النسيان قرار، ولا حاجة بتحصل لوحدها؟",
+      "لو قابلت نفسك من خمس سنين، هتقولها إيه؟"
+    ];
+
+    let lastIndex = 0;
+
+    function newQuestion() {
+      let index;
+
+      do {
+        index = Math.floor(Math.random() * questions.length);
+      } while (index === lastIndex);
+
+      lastIndex = index;
+      document.getElementById("question").textContent = questions[index];
+    }
+  </script>
+</body>
+</html>
