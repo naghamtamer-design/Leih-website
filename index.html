@@ -4,98 +4,507 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ليه؟ | سؤال يستاهل التفكير</title>
+  <meta name="theme-color" content="#eee0ca">
+
+  <title>ليه؟ | مساحة للأسئلة اللي جوانا</title>
+
+  <meta name="description" content="ليه؟ مساحة للأسئلة المختلفة، والتفكير بصوت هادي، واكتشاف وجهات نظر جديدة.">
+
   <style>
+    :root {
+      --paper: #eee0ca;
+      --paper-light: #f8f0e3;
+      --burgundy: #451321;
+      --burgundy-light: #702638;
+      --ink: #38251f;
+      --muted: #78665a;
+      --line: #cdb89d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #f7f0e7;
-      color: #51202d;
+      color: var(--ink);
       font-family: Tahoma, Arial, sans-serif;
-      text-align: center;
-    }
-
-    .card {
-      width: 85%;
-      max-width: 480px;
-      padding: 30px 20px;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 8px 30px #51202d15;
-    }
-
-    h1 {
-      color: #7b263a;
-      font-size: 42px;
-    }
-
-    #question {
-      font-size: 23px;
-      line-height: 1.8;
-      margin: 30px 0;
+      background-color: var(--paper);
+      background-image:
+        radial-gradient(
+          ellipse at 15% 20%,
+          rgba(255, 255, 255, 0.48),
+          transparent 45%
+        ),
+        radial-gradient(
+          ellipse at 85% 75%,
+          rgba(142, 104, 67, 0.10),
+          transparent 48%
+        ),
+        repeating-linear-gradient(
+          3deg,
+          rgba(106, 75, 48, 0.025) 0px,
+          rgba(106, 75, 48, 0.025) 1px,
+          transparent 1px,
+          transparent 5px
+        );
+      overflow-x: hidden;
     }
 
     button {
-      background: #7b263a;
-      color: white;
-      border: none;
-      padding: 14px 24px;
-      border-radius: 12px;
+      font: inherit;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 22px 18px 18px;
+      position: relative;
+      isolation: isolate;
+    }
+
+    /* حواف ناعمة تشبه الورق القديم */
+    .page::before {
+      content: "";
+      position: fixed;
+      inset: 10px;
+      border: 1px solid rgba(104, 68, 46, 0.15);
+      border-radius: 3px;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .top-note {
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .brand {
+      margin: 34px 0 0;
+      color: var(--burgundy);
+      font-family: Tahoma, Georgia, serif;
+      font-size: clamp(48px, 9vw, 72px);
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -3px;
+      text-align: center;
+      text-shadow: 1px 1px 0 rgba(69, 19, 33, 0.08);
+    }
+
+    .brand-line {
+      width: 52px;
+      height: 2px;
+      margin: 15px auto 0;
+      background: var(--burgundy);
+      opacity: 0.75;
+    }
+
+    .content {
+      width: 100%;
+      max-width: 650px;
+      margin: auto 0;
+      padding: 38px 0;
+    }
+
+    .panel {
+      position: relative;
+      padding: clamp(25px, 6vw, 52px);
+      background: rgba(250, 244, 233, 0.72);
+      border: 1px solid rgba(125, 91, 62, 0.23);
+      box-shadow:
+        0 12px 35px rgba(76, 44, 28, 0.07),
+        inset 0 0 35px rgba(255, 255, 255, 0.25);
+      text-align: center;
+    }
+
+    .panel::after {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(125, 91, 62, 0.10);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      color: var(--burgundy-light);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin: 0 0 22px;
+    }
+
+    .intro-title {
+      color: var(--burgundy);
+      font-family: Tahoma, Georgia, serif;
+      font-size: clamp(24px, 5vw, 36px);
+      line-height: 1.7;
+      margin: 0 auto 18px;
+      max-width: 510px;
+    }
+
+    .intro-text {
+      max-width: 475px;
+      margin: 0 auto;
+      color: #59463c;
       font-size: 16px;
-      cursor: pointer;
+      line-height: 2.1;
     }
 
-    button:hover {
-      background: #51202d;
-    }
-
-    .note {
-      color: #88746d;
+    .intro-small {
+      margin: 18px 0 0;
+      color: var(--muted);
       font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      min-height: 48px;
+      padding: 13px 25px;
+      border: 1px solid var(--burgundy);
+      border-radius: 3px;
+      cursor: pointer;
+      transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--burgundy);
+      color: #fff6e9;
+    }
+
+    .btn-primary:hover {
+      background: var(--burgundy-light);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--burgundy);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(69, 19, 33, 0.06);
+    }
+
+    .question-screen {
+      display: none;
+    }
+
+    .question-screen.active {
+      display: block;
+      animation: appear 0.4s ease;
+    }
+
+    .intro-screen.hidden {
+      display: none;
+    }
+
+    .question-number {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 0 0 25px;
+    }
+
+    .question {
+      color: var(--burgundy);
+      font-family: Tahoma, Georgia, serif;
+      font-size: clamp(24px, 5vw, 34px);
+      font-weight: bold;
+      line-height: 1.9;
+      margin: 0 auto;
+      max-width: 520px;
+    }
+
+    .question-hint {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.9;
+      margin: 22px 0 0;
+    }
+
+    .back-button {
+      display: inline-block;
       margin-top: 25px;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .back-button:hover {
+      color: var(--burgundy);
+    }
+
+    .footer {
+      width: 100%;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 2;
+      padding: 10px 0 8px;
+    }
+
+    .footer strong {
+      color: var(--burgundy);
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(7px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page {
+        padding: 18px 15px 14px;
+      }
+
+      .brand {
+        margin-top: 25px;
+      }
+
+      .content {
+        padding: 25px 0;
+      }
+
+      .panel {
+        padding: 29px 20px;
+      }
+
+      .intro-text {
+        font-size: 15px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
+
 <body>
-  <main class="card">
-    <h1>ليه؟</h1>
-    <p>سؤال صغير.. ممكن يفتح حكاية كبيرة.</p>
+  <div class="page">
 
-    <div id="question">
-      هو إحنا بنختار اللي بنحبه، ولا بنحب اللي اخترناه؟
-    </div>
+    <p class="top-note">مساحة للأسئلة اللي بتفضل في دماغنا</p>
 
-    <button onclick="newQuestion()">هات سؤال تاني ←</button>
+    <header>
+      <h1 class="brand">ليه؟</h1>
+      <div class="brand-line"></div>
+    </header>
 
-    <p class="note">مش لازم تجاوب على كل سؤال.. خُد اللي يلمسك وسيب الباقي.</p>
-  </main>
+    <main class="content">
+
+      <!-- شاشة الترحيب -->
+      <section class="panel intro-screen" id="introScreen">
+
+        <p class="eyebrow">أهلاً بيك في مساحتك</p>
+
+        <h2 class="intro-title">
+          مش كل سؤال ليه إجابة واحدة.
+        </h2>
+
+        <p class="intro-text">
+          فيه أسئلة بنعدّي عليها كل يوم من غير ما نفكر فيها،
+          وأسئلة بتفضل جوانا ومش بنعرف نسألها لمين.
+          <br>
+          <strong>«ليه؟»</strong> مساحة للأسئلة المختلفة،
+          والتفكير بصراحة، واكتشاف وجهات نظر مش شبهنا.
+        </p>
+
+        <p class="intro-small">
+          فكّر، جاوب لو حابب، أو عدي السؤال عادي.
+          كل سؤال ممكن يفتح باب لحكاية جديدة.
+        </p>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="startButton">
+            يلا نبدأ ←
+          </button>
+        </div>
+
+      </section>
+
+      <!-- شاشة الأسئلة -->
+      <section class="panel question-screen" id="questionScreen">
+
+        <p class="eyebrow">سؤال يستاهل تفكر فيه</p>
+
+        <p class="question-number" id="questionNumber">
+          سؤال من غير إجابة واحدة
+        </p>
+
+        <h2 class="question" id="question">
+          هو إحنا بنختار اللي بنحبه، ولا بنحب اللي اخترناه؟
+        </h2>
+
+        <p class="question-hint">
+          خد وقتك في التفكير... ومش لازم تجاوب لو مش حابب.
+        </p>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="nextButton">
+            سؤال تاني ←
+          </button>
+        </div>
+
+        <button class="back-button" id="backButton">
+          رجوع للبداية
+        </button>
+
+      </section>
+
+    </main>
+
+    <footer class="footer">
+      <strong>ليه؟</strong>
+      <br>
+      اسأل. فكّر. اكتشف.
+    </footer>
+
+  </div>
 
   <script>
     const questions = [
       "هو إحنا بنختار اللي بنحبه، ولا بنحب اللي اخترناه؟",
+
       "إيه الحاجة اللي نفسك الناس تفهمها عنك من غير ما تشرحها؟",
+
       "لو مفيش حد هيحكم عليك، إيه أول حاجة هتعملها؟",
+
       "هل كل حاجة بنخسرها كان لازم نخسرها؟",
+
       "إمتى آخر مرة غيرت رأيك في شخص تمامًا؟",
+
       "هو النسيان قرار، ولا حاجة بتحصل لوحدها؟",
-      "لو قابلت نفسك من خمس سنين، هتقولها إيه؟"
+
+      "لو قابلت نفسك من خمس سنين، هتقولها إيه؟",
+
+      "إيه الفرق بين إنك تكون لوحدك وإنك تحس بالوحدة؟",
+
+      "هل ممكن نشتاق لنسخة قديمة من نفسنا؟",
+
+      "إيه الحقيقة اللي أخد منك وقت طويل عشان تعترف بيها؟",
+
+      "لو تقدر تسأل أي شخص سؤال واحد ويجاوبك بصراحة، هتسأل مين وإيه؟",
+
+      "إحنا بنتغير فعلًا، ولا بنظهر جوانب كانت موجودة فينا من البداية؟",
+
+      "إيه الحاجة اللي بنعملها عشان نرضي الناس وبننسى نفسنا؟",
+
+      "هل كل حاجة بنتمناها تستاهل إننا نوصل لها؟",
+
+      "لو الخوف اختفى لمدة يوم، إيه اللي ممكن تعمله؟"
     ];
 
-    let lastIndex = 0;
+    const introScreen = document.getElementById("introScreen");
+    const questionScreen = document.getElementById("questionScreen");
+    const questionElement = document.getElementById("question");
+    const questionNumber = document.getElementById("questionNumber");
 
-    function newQuestion() {
+    let lastIndex = 0;
+    let questionCount = 0;
+
+    function startQuestions() {
+      introScreen.classList.add("hidden");
+      questionScreen.classList.add("active");
+      showQuestion(true);
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+    function showQuestion(firstQuestion = false) {
       let index;
 
       do {
         index = Math.floor(Math.random() * questions.length);
-      } while (index === lastIndex);
+      } while (questions.length > 1 && index === lastIndex);
 
       lastIndex = index;
-      document.getElementById("question").textContent = questions[index];
+      questionCount++;
+
+      questionElement.textContent = questions[index];
+      questionNumber.textContent = "السؤال رقم " + questionCount;
+
+      if (firstQuestion) {
+        questionScreen.classList.remove("active");
+        void questionScreen.offsetWidth;
+        questionScreen.classList.add("active");
+      }
     }
+
+    function goHome() {
+      questionScreen.classList.remove("active");
+      introScreen.classList.remove("hidden");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+    document.getElementById("startButton").addEventListener(
+      "click",
+      startQuestions
+    );
+
+    document.getElementById("nextButton").addEventListener(
+      "click",
+      () => showQuestion()
+    );
+
+    document.getElementById("backButton").addEventListener(
+      "click",
+      goHome
+    );
   </script>
 </body>
 </html>
