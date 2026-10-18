@@ -5,506 +5,569 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#eee0ca">
-
-  <title>ليه؟ | مساحة للأسئلة اللي جوانا</title>
-
-  <meta name="description" content="ليه؟ مساحة للأسئلة المختلفة، والتفكير بصوت هادي، واكتشاف وجهات نظر جديدة.">
+  <title>استوديو ليه؟ | تصميم الكروت</title>
 
   <style>
     :root {
       --paper: #eee0ca;
-      --paper-light: #f8f0e3;
-      --burgundy: #451321;
-      --burgundy-light: #702638;
-      --ink: #38251f;
-      --muted: #78665a;
-      --line: #cdb89d;
+      --ink: #451321;
+      --accent: #795548;
+      --olive: #3c4636;
+      --bg: #e7dccb;
     }
 
     * {
       box-sizing: border-box;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
       margin: 0;
-      min-height: 100vh;
       color: var(--ink);
+      background: var(--bg);
       font-family: Tahoma, Arial, sans-serif;
-      background-color: var(--paper);
-      background-image:
-        radial-gradient(
-          ellipse at 15% 20%,
-          rgba(255, 255, 255, 0.48),
-          transparent 45%
-        ),
-        radial-gradient(
-          ellipse at 85% 75%,
-          rgba(142, 104, 67, 0.10),
-          transparent 48%
-        ),
-        repeating-linear-gradient(
-          3deg,
-          rgba(106, 75, 48, 0.025) 0px,
-          rgba(106, 75, 48, 0.025) 1px,
-          transparent 1px,
-          transparent 5px
-        );
-      overflow-x: hidden;
+      transition: background .25s, color .25s;
     }
 
-    button {
-      font: inherit;
-    }
-
-    .page {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 22px 18px 18px;
-      position: relative;
-      isolation: isolate;
-    }
-
-    /* حواف ناعمة تشبه الورق القديم */
-    .page::before {
-      content: "";
-      position: fixed;
-      inset: 10px;
-      border: 1px solid rgba(104, 68, 46, 0.15);
-      border-radius: 3px;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    .top-note {
-      font-size: 12px;
-      letter-spacing: 1px;
-      color: var(--muted);
+    header {
+      padding: 26px 18px 20px;
       text-align: center;
-      margin-top: 10px;
+      border-bottom: 1px solid #45132130;
     }
 
     .brand {
-      margin: 34px 0 0;
-      color: var(--burgundy);
-      font-family: Tahoma, Georgia, serif;
-      font-size: clamp(48px, 9vw, 72px);
-      font-weight: 900;
-      line-height: 1.2;
-      letter-spacing: -3px;
+      font-family: Georgia, serif;
+      font-size: 48px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin: 0;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    main {
+      width: min(100% - 28px, 900px);
+      margin: 24px auto 40px;
+    }
+
+    .intro {
       text-align: center;
-      text-shadow: 1px 1px 0 rgba(69, 19, 33, 0.08);
+      margin-bottom: 24px;
     }
 
-    .brand-line {
-      width: 52px;
-      height: 2px;
-      margin: 15px auto 0;
-      background: var(--burgundy);
-      opacity: 0.75;
+    .intro h2 {
+      margin-bottom: 8px;
+      font-size: 23px;
     }
 
-    .content {
-      width: 100%;
-      max-width: 650px;
-      margin: auto 0;
-      padding: 38px 0;
+    .intro p {
+      line-height: 1.9;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
     }
 
     .panel {
-      position: relative;
-      padding: clamp(25px, 6vw, 52px);
-      background: rgba(250, 244, 233, 0.72);
-      border: 1px solid rgba(125, 91, 62, 0.23);
-      box-shadow:
-        0 12px 35px rgba(76, 44, 28, 0.07),
-        inset 0 0 35px rgba(255, 255, 255, 0.25);
+      background: #fffaf2;
+      border: 1px solid #45132122;
+      border-radius: 14px;
+      padding: 18px;
+      box-shadow: 0 8px 25px #4513210a;
+    }
+
+    .panel h3 {
+      margin: 0 0 18px;
+      font-size: 18px;
+    }
+
+    .field {
+      margin-bottom: 17px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    input, textarea, select {
+      display: block;
+      width: 100%;
+      border: 1px solid #79554855;
+      background: #fffdf8;
+      color: #451321;
+      border-radius: 8px;
+      padding: 11px;
+      font: inherit;
+      font-size: 14px;
+      outline-color: var(--accent);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 85px;
+      line-height: 1.8;
+    }
+
+    .hint {
+      font-size: 11px;
+      color: #795548;
+      line-height: 1.7;
+      margin-top: 6px;
+    }
+
+    .preview-area {
+      min-width: 0;
       text-align: center;
     }
 
-    .panel::after {
+    .preview-area h3 {
+      margin: 0 0 15px;
+      font-size: 18px;
+    }
+
+    .card {
+      --card-bg: #eee0ca;
+      --card-ink: #451321;
+      --card-accent: #795548;
+
+      width: 100%;
+      max-width: 340px;
+      aspect-ratio: 5 / 7;
+      margin: 0 auto;
+      padding: 20px;
+      color: var(--card-ink);
+      background: var(--card-bg);
+      border: 1px solid var(--card-accent);
+      border-radius: 5px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 15px 35px #38201825;
+      transition: background .25s, color .25s;
+      text-align: center;
+    }
+
+    .card::before {
       content: "";
       position: absolute;
       inset: 8px;
-      border: 1px solid rgba(125, 91, 62, 0.10);
+      border: 1px solid var(--card-accent);
+      opacity: .65;
       pointer-events: none;
     }
 
-    .eyebrow {
-      color: var(--burgundy-light);
-      font-size: 12px;
-      font-weight: bold;
-      letter-spacing: 1px;
-      margin: 0 0 22px;
-    }
-
-    .intro-title {
-      color: var(--burgundy);
-      font-family: Tahoma, Georgia, serif;
-      font-size: clamp(24px, 5vw, 36px);
-      line-height: 1.7;
-      margin: 0 auto 18px;
-      max-width: 510px;
-    }
-
-    .intro-text {
-      max-width: 475px;
-      margin: 0 auto;
-      color: #59463c;
-      font-size: 16px;
-      line-height: 2.1;
-    }
-
-    .intro-small {
-      margin: 18px 0 0;
-      color: var(--muted);
+    .card::after {
+      content: "✦";
+      position: absolute;
+      top: 15px;
+      left: 17px;
       font-size: 13px;
-      line-height: 1.9;
+      color: var(--card-accent);
     }
 
-    .actions {
+    .card.paper {
+      background-image:
+        radial-gradient(ellipse at 15% 20%, #ffffff50, transparent 45%),
+        radial-gradient(ellipse at 85% 80%, #79554818, transparent 48%);
+    }
+
+    .card.night {
+      background-image:
+        radial-gradient(ellipse at top, #ffffff12, transparent 65%),
+        repeating-linear-gradient(
+          45deg, transparent, transparent 8px, #ffffff05 9px
+        );
+    }
+
+    .card.clean {
+      background-image: none;
+      border-width: 2px;
+    }
+
+    .card-top, .card-middle, .card-bottom {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-number {
+      font-size: 12px;
+      letter-spacing: 3px;
+    }
+
+    .card-collection {
+      font-size: 10px;
+      margin-top: 7px;
+      opacity: .85;
+    }
+
+    .card-logo {
+      font-size: 27px;
+      margin-bottom: 20px;
+    }
+
+    .card-question {
+      font-size: clamp(18px, 4vw, 25px);
+      line-height: 1.9;
+      font-weight: bold;
+      overflow-wrap: anywhere;
+      margin: 0;
+    }
+
+    .card-line {
+      font-size: 12px;
+      line-height: 1.9;
+      margin: 17px 0 0;
+      opacity: .85;
+      overflow-wrap: anywhere;
+    }
+
+    .card-bottom {
+      font-size: 10px;
+      letter-spacing: 2px;
+    }
+
+    .preview-note {
+      font-size: 12px;
+      color: #795548;
+      line-height: 1.8;
+      margin: 15px auto;
+      max-width: 330px;
+    }
+
+    .palette {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 30px;
+      gap: 9px;
+      margin-top: 10px;
     }
 
-    .btn {
-      min-height: 48px;
-      padding: 13px 25px;
-      border: 1px solid var(--burgundy);
-      border-radius: 3px;
+    .swatch {
+      flex: 1;
+      height: 34px;
+      border-radius: 7px;
+      border: 2px solid #00000012;
       cursor: pointer;
-      transition:
-        background-color 0.2s ease,
-        color 0.2s ease,
-        transform 0.2s ease;
     }
 
-    .btn:hover {
-      transform: translateY(-2px);
+    .swatch:focus {
+      outline: 2px solid #451321;
+      outline-offset: 2px;
     }
 
-    .btn-primary {
-      background: var(--burgundy);
-      color: #fff6e9;
-    }
-
-    .btn-primary:hover {
-      background: var(--burgundy-light);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--burgundy);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(69, 19, 33, 0.06);
-    }
-
-    .question-screen {
-      display: none;
-    }
-
-    .question-screen.active {
-      display: block;
-      animation: appear 0.4s ease;
-    }
-
-    .intro-screen.hidden {
-      display: none;
-    }
-
-    .question-number {
-      color: var(--muted);
-      font-size: 12px;
-      margin: 0 0 25px;
-    }
-
-    .question {
-      color: var(--burgundy);
-      font-family: Tahoma, Georgia, serif;
-      font-size: clamp(24px, 5vw, 34px);
-      font-weight: bold;
-      line-height: 1.9;
-      margin: 0 auto;
-      max-width: 520px;
-    }
-
-    .question-hint {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.9;
-      margin: 22px 0 0;
-    }
-
-    .back-button {
-      display: inline-block;
-      margin-top: 25px;
-      border: 0;
-      background: transparent;
-      color: var(--muted);
-      font-size: 13px;
-      cursor: pointer;
-      text-decoration: underline;
-      text-underline-offset: 4px;
-    }
-
-    .back-button:hover {
-      color: var(--burgundy);
-    }
-
-    .footer {
+    button {
       width: 100%;
+      border: 0;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 12px 15px;
+      border-radius: 8px;
+      font: inherit;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 7px;
+    }
+
+    button.secondary {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--ink);
+    }
+
+    footer {
       text-align: center;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 2;
-      padding: 10px 0 8px;
+      padding: 22px 12px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      opacity: .8;
     }
 
-    .footer strong {
-      color: var(--burgundy);
-    }
-
-    @keyframes appear {
-      from {
-        opacity: 0;
-        transform: translateY(7px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 480px) {
-      .page {
-        padding: 18px 15px 14px;
+    @media (max-width: 650px) {
+      .workspace {
+        grid-template-columns: 1fr;
       }
 
-      .brand {
-        margin-top: 25px;
+      .preview-area {
+        grid-row: 1;
       }
 
-      .content {
-        padding: 25px 0;
+      .card {
+        max-width: 290px;
       }
 
       .panel {
-        padding: 29px 20px;
+        padding: 15px;
       }
 
-      .intro-text {
-        font-size: 15px;
-      }
-
-      .actions {
-        flex-direction: column;
-      }
-
-      .btn {
-        width: 100%;
+      .brand {
+        font-size: 43px;
       }
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-        transition-duration: 0.01ms !important;
+    @media print {
+      body {
+        background: white;
+      }
+
+      header, .intro, .panel, .preview-note, footer {
+        display: none !important;
+      }
+
+      main, .workspace, .preview-area {
+        display: block;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .card {
+        box-shadow: none;
+        margin: 0 auto;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="page">
+  <header>
+    <h1 class="brand">ليه؟</h1>
+    <p class="subtitle">مساحة للأسئلة اللي جوانا</p>
+  </header>
 
-    <p class="top-note">مساحة للأسئلة اللي بتفضل في دماغنا</p>
+  <main>
+    <section class="intro">
+      <h2>استوديو التصميم</h2>
+      <p>
+        كل كارت حكاية صغيرة. جرّبي الألوان والخطوط والتفاصيل،
+        وشوفي فكرتك وهي بتاخد شكلها.
+      </p>
+    </section>
 
-    <header>
-      <h1 class="brand">ليه؟</h1>
-      <div class="brand-line"></div>
-    </header>
+    <div class="workspace">
+      <section class="panel">
+        <h3>تفاصيل الكارت</h3>
 
-    <main class="content">
-
-      <!-- شاشة الترحيب -->
-      <section class="panel intro-screen" id="introScreen">
-
-        <p class="eyebrow">أهلاً بيك في مساحتك</p>
-
-        <h2 class="intro-title">
-          مش كل سؤال ليه إجابة واحدة.
-        </h2>
-
-        <p class="intro-text">
-          فيه أسئلة بنعدّي عليها كل يوم من غير ما نفكر فيها،
-          وأسئلة بتفضل جوانا ومش بنعرف نسألها لمين.
-          <br>
-          <strong>«ليه؟»</strong> مساحة للأسئلة المختلفة،
-          والتفكير بصراحة، واكتشاف وجهات نظر مش شبهنا.
-        </p>
-
-        <p class="intro-small">
-          فكّر، جاوب لو حابب، أو عدي السؤال عادي.
-          كل سؤال ممكن يفتح باب لحكاية جديدة.
-        </p>
-
-        <div class="actions">
-          <button class="btn btn-primary" id="startButton">
-            يلا نبدأ ←
-          </button>
+        <div class="field">
+          <label for="question">السؤال الرئيسي</label>
+          <textarea id="question">إيه الحاجة اللي نفسك تفهميها عن نفسك؟</textarea>
         </div>
 
-      </section>
-
-      <!-- شاشة الأسئلة -->
-      <section class="panel question-screen" id="questionScreen">
-
-        <p class="eyebrow">سؤال يستاهل تفكر فيه</p>
-
-        <p class="question-number" id="questionNumber">
-          سؤال من غير إجابة واحدة
-        </p>
-
-        <h2 class="question" id="question">
-          هو إحنا بنختار اللي بنحبه، ولا بنحب اللي اخترناه؟
-        </h2>
-
-        <p class="question-hint">
-          خد وقتك في التفكير... ومش لازم تجاوب لو مش حابب.
-        </p>
-
-        <div class="actions">
-          <button class="btn btn-primary" id="nextButton">
-            سؤال تاني ←
-          </button>
+        <div class="field">
+          <label for="line">الجملة المصاحبة</label>
+          <textarea id="line">مش كل سؤال محتاج إجابة سريعة.</textarea>
         </div>
 
-        <button class="back-button" id="backButton">
-          رجوع للبداية
+        <div class="field">
+          <label for="number">رقم الكارت</label>
+          <input id="number" type="number" min="1" max="999" value="01">
+        </div>
+
+        <div class="field">
+          <label for="collection">اسم المجموعة</label>
+          <input id="collection" type="text" value="أسئلة جوانا">
+        </div>
+
+        <h3>ألوان الهوية</h3>
+
+        <div class="field">
+          <label for="paletteSelect">اختاري مجموعة ألوان</label>
+          <select id="paletteSelect">
+            <option value="burgundy">عنابي وورق قديم</option>
+            <option value="olive">زيتي وورق قديم</option>
+            <option value="brown">بني وورق كريمي</option>
+            <option value="night">غموض داكن</option>
+          </select>
+        </div>
+
+        <div class="palette" aria-label="ألوان للتجربة">
+          <button class="swatch" type="button"
+            style="background:#451321" data-palette="burgundy"
+            aria-label="عنابي"></button>
+          <button class="swatch" type="button"
+            style="background:#3c4636" data-palette="olive"
+            aria-label="زيتي"></button>
+          <button class="swatch" type="button"
+            style="background:#795548" data-palette="brown"
+            aria-label="بني"></button>
+          <button class="swatch" type="button"
+            style="background:#242321" data-palette="night"
+            aria-label="داكن"></button>
+        </div>
+
+        <div class="field" style="margin-top:18px">
+          <label for="fontSelect">الخط</label>
+          <select id="fontSelect">
+            <option value="Tahoma, Arial, sans-serif">Tahoma — بسيط وواضح</option>
+            <option value="Georgia, serif">Georgia — كلاسيكي</option>
+            <option value="'Courier New', monospace">Courier — كشكول قديم</option>
+            <option value="Arial, sans-serif">Arial — عصري</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="backgroundSelect">ملمس الخلفية</label>
+          <select id="backgroundSelect">
+            <option value="paper">ورق قديم</option>
+            <option value="clean">سادة وأنيق</option>
+            <option value="night">غامض ومظلم</option>
+          </select>
+        </div>
+
+        <button id="resetBtn" class="secondary" type="button">
+          رجوع للتصميم الأساسي
         </button>
-
       </section>
 
-    </main>
+      <section class="preview-area">
+        <h3>معاينة الكارت</h3>
 
-    <footer class="footer">
-      <strong>ليه؟</strong>
-      <br>
-      اسأل. فكّر. اكتشف.
-    </footer>
+        <div class="card paper" id="card">
+          <div class="card-top">
+            <div class="card-number" id="previewNumber">01</div>
+            <div class="card-collection" id="previewCollection">
+              أسئلة جوانا
+            </div>
+          </div>
 
-  </div>
+          <div class="card-middle">
+            <div class="card-logo">ليه؟</div>
+            <p class="card-question" id="previewQuestion">
+              إيه الحاجة اللي نفسك تفهميها عن نفسك؟
+            </p>
+            <p class="card-line" id="previewLine">
+              مش كل سؤال محتاج إجابة سريعة.
+            </p>
+          </div>
+
+          <div class="card-bottom">اسألي نفسك</div>
+        </div>
+
+        <p class="preview-note">
+          دي معاينة تجريبية. التغييرات بتظهر فورًا، لكنها مش محفوظة
+          بعد إغلاق الصفحة في النسخة دي.
+        </p>
+
+        <button id="printBtn" type="button">طباعة أو حفظ كـ PDF</button>
+      </section>
+    </div>
+  </main>
+
+  <footer>لَيْه؟ — لكل سؤال حكاية</footer>
 
   <script>
-    const questions = [
-      "هو إحنا بنختار اللي بنحبه، ولا بنحب اللي اخترناه؟",
-
-      "إيه الحاجة اللي نفسك الناس تفهمها عنك من غير ما تشرحها؟",
-
-      "لو مفيش حد هيحكم عليك، إيه أول حاجة هتعملها؟",
-
-      "هل كل حاجة بنخسرها كان لازم نخسرها؟",
-
-      "إمتى آخر مرة غيرت رأيك في شخص تمامًا؟",
-
-      "هو النسيان قرار، ولا حاجة بتحصل لوحدها؟",
-
-      "لو قابلت نفسك من خمس سنين، هتقولها إيه؟",
-
-      "إيه الفرق بين إنك تكون لوحدك وإنك تحس بالوحدة؟",
-
-      "هل ممكن نشتاق لنسخة قديمة من نفسنا؟",
-
-      "إيه الحقيقة اللي أخد منك وقت طويل عشان تعترف بيها؟",
-
-      "لو تقدر تسأل أي شخص سؤال واحد ويجاوبك بصراحة، هتسأل مين وإيه؟",
-
-      "إحنا بنتغير فعلًا، ولا بنظهر جوانب كانت موجودة فينا من البداية؟",
-
-      "إيه الحاجة اللي بنعملها عشان نرضي الناس وبننسى نفسنا؟",
-
-      "هل كل حاجة بنتمناها تستاهل إننا نوصل لها؟",
-
-      "لو الخوف اختفى لمدة يوم، إيه اللي ممكن تعمله؟"
-    ];
-
-    const introScreen = document.getElementById("introScreen");
-    const questionScreen = document.getElementById("questionScreen");
-    const questionElement = document.getElementById("question");
-    const questionNumber = document.getElementById("questionNumber");
-
-    let lastIndex = 0;
-    let questionCount = 0;
-
-    function startQuestions() {
-      introScreen.classList.add("hidden");
-      questionScreen.classList.add("active");
-      showQuestion(true);
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    }
-
-    function showQuestion(firstQuestion = false) {
-      let index;
-
-      do {
-        index = Math.floor(Math.random() * questions.length);
-      } while (questions.length > 1 && index === lastIndex);
-
-      lastIndex = index;
-      questionCount++;
-
-      questionElement.textContent = questions[index];
-      questionNumber.textContent = "السؤال رقم " + questionCount;
-
-      if (firstQuestion) {
-        questionScreen.classList.remove("active");
-        void questionScreen.offsetWidth;
-        questionScreen.classList.add("active");
+    const palettes = {
+      burgundy: {
+        paper: "#eee0ca",
+        ink: "#451321",
+        accent: "#795548",
+        bg: "#e7dccb"
+      },
+      olive: {
+        paper: "#e9e1cd",
+        ink: "#3c4636",
+        accent: "#7a7352",
+        bg: "#dcdcc9"
+      },
+      brown: {
+        paper: "#f0e2cb",
+        ink: "#624334",
+        accent: "#98765b",
+        bg: "#e5d4bd"
+      },
+      night: {
+        paper: "#242321",
+        ink: "#eee0ca",
+        accent: "#b59a76",
+        bg: "#171615"
       }
+    };
+
+    const $ = id => document.getElementById(id);
+
+    const card = $("card");
+
+    function updateText() {
+      $("previewQuestion").textContent = $("question").value;
+      $("previewLine").textContent = $("line").value;
+      $("previewNumber").textContent =
+        String($("number").value || "01").padStart(2, "0");
+      $("previewCollection").textContent =
+        $("collection").value || "مجموعة جديدة";
     }
 
-    function goHome() {
-      questionScreen.classList.remove("active");
-      introScreen.classList.remove("hidden");
+    function updatePalette(name) {
+      const p = palettes[name] || palettes.burgundy;
 
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+      document.documentElement.style.setProperty("--paper", p.paper);
+      document.documentElement.style.setProperty("--ink", p.ink);
+      document.documentElement.style.setProperty("--accent", p.accent);
+      document.documentElement.style.setProperty("--bg", p.bg);
+
+      card.style.setProperty("--card-bg", p.paper);
+      card.style.setProperty("--card-ink", p.ink);
+      card.style.setProperty("--card-accent", p.accent);
+
+      $("paletteSelect").value = name;
+    }
+
+    function updateBackground() {
+      card.classList.remove("paper", "clean", "night");
+      card.classList.add($("backgroundSelect").value);
+    }
+
+    ["question", "line", "number", "collection"].forEach(id => {
+      $(id).addEventListener("input", updateText);
+    });
+
+    $("paletteSelect").addEventListener("change", event => {
+      updatePalette(event.target.value);
+    });
+
+    document.querySelectorAll("[data-palette]").forEach(button => {
+      button.addEventListener("click", () => {
+        updatePalette(button.dataset.palette);
       });
-    }
+    });
 
-    document.getElementById("startButton").addEventListener(
-      "click",
-      startQuestions
-    );
+    $("fontSelect").addEventListener("change", event => {
+      card.style.fontFamily = event.target.value;
+    });
 
-    document.getElementById("nextButton").addEventListener(
-      "click",
-      () => showQuestion()
-    );
+    $("backgroundSelect").addEventListener("change", updateBackground);
 
-    document.getElementById("backButton").addEventListener(
-      "click",
-      goHome
-    );
+    $("resetBtn").addEventListener("click", () => {
+      $("question").value = "إيه الحاجة اللي نفسك تفهميها عن نفسك؟";
+      $("line").value = "مش كل سؤال محتاج إجابة سريعة.";
+      $("number").value = "01";
+      $("collection").value = "أسئلة جوانا";
+      $("fontSelect").selectedIndex = 0;
+      $("backgroundSelect").value = "paper";
+      card.style.fontFamily = "Tahoma, Arial, sans-serif";
+      updatePalette("burgundy");
+      updateBackground();
+      updateText();
+    });
+
+    $("printBtn").addEventListener("click", () => {
+      window.print();
+    });
+
+    updateText();
+    updatePalette("burgundy");
+    updateBackground();
   </script>
 </body>
 </html>
