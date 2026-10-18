@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -6,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#eee0ca">
   <title>استوديو ليه؟ | تصميم الكروت</title>
+
+  <!-- استدعاء خط الرقعة العربي من Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -34,12 +38,14 @@
       border-bottom: 1px solid #45132130;
     }
 
+    /* تطبيق خط الرقعة اليدوي على كلمة ليه الهيدر */
     .brand {
-      font-family: Georgia, serif;
-      font-size: 48px;
+      font-family: 'Aref Ruqaa', Georgia, serif;
+      font-size: 56px;
       font-weight: bold;
-      letter-spacing: 2px;
+      letter-spacing: 0px;
       margin: 0;
+      line-height: 1.2;
     }
 
     .subtitle {
@@ -213,9 +219,13 @@
       opacity: .85;
     }
 
+    /* تطبيق خط الرقعة اليدوي على كلمة ليه جوة الكارت */
     .card-logo {
-      font-size: 27px;
-      margin-bottom: 20px;
+      font-family: 'Aref Ruqaa', Georgia, serif;
+      font-size: 34px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      line-height: 1;
     }
 
     .card-question {
@@ -311,7 +321,7 @@
       }
 
       .brand {
-        font-size: 43px;
+        font-size: 48px;
       }
     }
 
@@ -411,6 +421,7 @@
           <label for="fontSelect">الخط</label>
           <select id="fontSelect">
             <option value="Tahoma, Arial, sans-serif">Tahoma — بسيط وواضح</option>
+            <option value="'Aref Ruqaa', serif">رقعة يدوي — أصيل وفني</option>
             <option value="Georgia, serif">Georgia — كلاسيكي</option>
             <option value="'Courier New', monospace">Courier — كشكول قديم</option>
             <option value="Arial, sans-serif">Arial — عصري</option>
