@@ -16,7 +16,6 @@
       --paper: #eee0ca;
       --ink: #451321;
       --accent: #795548;
-      --olive: #3c4636;
       --bg: #e7dccb;
     }
 
@@ -134,7 +133,7 @@
       font-size: 18px;
     }
 
-    /* كارت بالعرض Landscape */
+    /* تصميم الكارت الأفقي مع الإطار اليدوي */
     .card {
       --card-bg: #eee0ca;
       --card-ink: #451321;
@@ -144,11 +143,12 @@
       max-width: 440px;
       aspect-ratio: 7 / 5;
       margin: 0 auto;
-      padding: 22px 28px;
+      padding: 26px 32px;
       color: var(--card-ink);
       background: var(--card-bg);
-      border: 1px solid var(--card-accent);
-      border-radius: 6px;
+      /* إطار يشبه الرسم اليدوي بنقاط منحنية خفيفة */
+      border: 2px dashed var(--card-ink);
+      border-radius: 12px;
       position: relative;
       overflow: hidden;
       display: flex;
@@ -159,12 +159,14 @@
       text-align: center;
     }
 
+    /* إطار داخلي رفيع لإعطاء عمق كلاسيكي هادئ */
     .card::before {
       content: "";
       position: absolute;
-      inset: 8px;
-      border: 1px solid var(--card-accent);
-      opacity: .65;
+      inset: 6px;
+      border: 1px solid var(--card-ink);
+      opacity: .35;
+      border-radius: 8px;
       pointer-events: none;
     }
 
@@ -174,17 +176,8 @@
         radial-gradient(ellipse at 85% 80%, #79554818, transparent 48%);
     }
 
-    .card.night {
-      background-image:
-        radial-gradient(ellipse at top, #ffffff12, transparent 65%),
-        repeating-linear-gradient(
-          45deg, transparent, transparent 8px, #ffffff05 9px
-        );
-    }
-
     .card.clean {
       background-image: none;
-      border-width: 2px;
     }
 
     .card-top, .card-middle, .card-bottom {
@@ -219,7 +212,6 @@
       margin: 10px 0;
     }
 
-    /* تكبير السؤال وإعطائه المساحة كاملة */
     .card-question {
       font-size: clamp(18px, 4.2vw, 25px);
       line-height: 1.7;
@@ -241,7 +233,7 @@
       letter-spacing: 2px;
     }
 
-    /* ظهر الكارت الملّون بلون الخط الرئيسي للكارت */
+    /* ظهر الكارت باللون الملون الخاص بالمجموعة */
     .card-back {
       display: none;
       flex-direction: column;
@@ -254,14 +246,17 @@
       background: var(--card-ink);
       color: var(--card-bg);
       padding: 20px;
+      border: 2px dashed var(--card-bg);
+      border-radius: 12px;
     }
 
     .card-back::before {
       content: "";
       position: absolute;
-      inset: 8px;
+      inset: 6px;
       border: 1px solid var(--card-bg);
       opacity: .4;
+      border-radius: 8px;
       pointer-events: none;
     }
 
@@ -450,7 +445,7 @@
             <option value="burgundy">عنابي وورق قديم</option>
             <option value="olive">زيتي وورق قديم</option>
             <option value="brown">بني وورق كريمي</option>
-            <option value="night">غموض داكن</option>
+            <option value="navy">كحلي دافئ وورق كريمي</option>
           </select>
         </div>
 
@@ -465,8 +460,8 @@
             style="background:#795548" data-palette="brown"
             aria-label="بني"></button>
           <button class="swatch" type="button"
-            style="background:#242321" data-palette="night"
-            aria-label="داكن"></button>
+            style="background:#1e293b" data-palette="navy"
+            aria-label="كحلي"></button>
         </div>
 
         <div class="field" style="margin-top:18px">
@@ -485,7 +480,6 @@
           <select id="backgroundSelect">
             <option value="paper">ورق قديم</option>
             <option value="clean">سادة وأنيق</option>
-            <option value="night">غامض ومظلم</option>
           </select>
         </div>
 
@@ -500,7 +494,7 @@
         <button id="toggleSideBtn" class="toggle-view-btn" type="button">عرض ظهر الكارت 🔄</button>
 
         <div class="card paper" id="card">
-          <!-- وجه الكارت (نظيف وبدون كلمة "ليه؟" ومساحة أكبر للسؤال) -->
+          <!-- وجه الكارت -->
           <div id="cardFront" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
             <div class="card-top">
               <span class="card-number" id="previewNumber">01</span>
@@ -520,7 +514,7 @@
             <div class="card-bottom">اسألي نفسك</div>
           </div>
 
-          <!-- ظهر الكارت (بلون الحبر الداكن مع كتابة بيج/كريمي) -->
+          <!-- ظهر الكارت باللون الداكن مع الخط الفاتح -->
           <div id="cardBack" class="card-back">
             <div class="back-brand">ليه؟</div>
             <div class="back-divider"></div>
@@ -560,11 +554,11 @@
         accent: "#98765b",
         bg: "#e5d4bd"
       },
-      night: {
-        paper: "#242321",
-        ink: "#eee0ca",
-        accent: "#b59a76",
-        bg: "#171615"
+      navy: {
+        paper: "#e2e8f0",
+        ink: "#1e293b",
+        accent: "#475569",
+        bg: "#cbd5e1"
       }
     };
 
@@ -598,7 +592,7 @@
     }
 
     function updateBackground() {
-      card.classList.remove("paper", "clean", "night");
+      card.classList.remove("paper", "clean");
       card.classList.add($("backgroundSelect").value);
     }
 
