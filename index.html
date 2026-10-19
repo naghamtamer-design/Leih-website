@@ -38,7 +38,6 @@
       border-bottom: 1px solid #45132130;
     }
 
-    /* تطبيق خط الرقعة اليدوي على كلمة ليه الهيدر */
     .brand {
       font-family: 'Aref Ruqaa', Georgia, serif;
       font-size: 56px;
@@ -125,13 +124,6 @@
       line-height: 1.8;
     }
 
-    .hint {
-      font-size: 11px;
-      color: #795548;
-      line-height: 1.7;
-      margin-top: 6px;
-    }
-
     .preview-area {
       min-width: 0;
       text-align: center;
@@ -142,20 +134,21 @@
       font-size: 18px;
     }
 
+    /* كارت بالعرض Landscape */
     .card {
       --card-bg: #eee0ca;
       --card-ink: #451321;
       --card-accent: #795548;
 
       width: 100%;
-      max-width: 340px;
-      aspect-ratio: 5 / 7;
+      max-width: 440px;
+      aspect-ratio: 7 / 5;
       margin: 0 auto;
-      padding: 20px;
+      padding: 18px 24px;
       color: var(--card-ink);
       background: var(--card-bg);
       border: 1px solid var(--card-accent);
-      border-radius: 5px;
+      border-radius: 6px;
       position: relative;
       overflow: hidden;
       display: flex;
@@ -173,15 +166,6 @@
       border: 1px solid var(--card-accent);
       opacity: .65;
       pointer-events: none;
-    }
-
-    .card::after {
-      content: "✦";
-      position: absolute;
-      top: 15px;
-      left: 17px;
-      font-size: 13px;
-      color: var(--card-accent);
     }
 
     .card.paper {
@@ -208,29 +192,35 @@
       z-index: 1;
     }
 
+    .card-top {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
+
     .card-number {
-      font-size: 12px;
-      letter-spacing: 3px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      font-weight: bold;
     }
 
     .card-collection {
-      font-size: 10px;
-      margin-top: 7px;
+      font-size: 11px;
       opacity: .85;
     }
 
-    /* تطبيق خط الرقعة اليدوي على كلمة ليه جوة الكارت */
     .card-logo {
       font-family: 'Aref Ruqaa', Georgia, serif;
-      font-size: 34px;
+      font-size: 32px;
       font-weight: bold;
-      margin-bottom: 15px;
+      margin-bottom: 8px;
       line-height: 1;
     }
 
     .card-question {
-      font-size: clamp(18px, 4vw, 25px);
-      line-height: 1.9;
+      font-size: clamp(16px, 3.5vw, 22px);
+      line-height: 1.7;
       font-weight: bold;
       overflow-wrap: anywhere;
       margin: 0;
@@ -238,8 +228,8 @@
 
     .card-line {
       font-size: 12px;
-      line-height: 1.9;
-      margin: 17px 0 0;
+      line-height: 1.6;
+      margin: 10px 0 0;
       opacity: .85;
       overflow-wrap: anywhere;
     }
@@ -247,6 +237,52 @@
     .card-bottom {
       font-size: 10px;
       letter-spacing: 2px;
+    }
+
+    /* ظهر الكارت المميز */
+    .card-back {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .back-brand {
+      font-family: 'Aref Ruqaa', Georgia, serif;
+      font-size: 54px;
+      font-weight: bold;
+      margin-bottom: 6px;
+      line-height: 1;
+    }
+
+    .back-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--card-accent);
+      opacity: 0.6;
+      margin: 8px 0;
+    }
+
+    .back-slogan {
+      font-size: 11px;
+      letter-spacing: 1px;
+      opacity: 0.85;
+    }
+
+    .toggle-view-btn {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--ink);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      width: auto;
+      display: inline-block;
     }
 
     .preview-note {
@@ -313,7 +349,7 @@
       }
 
       .card {
-        max-width: 290px;
+        max-width: 340px;
       }
 
       .panel {
@@ -330,7 +366,7 @@
         background: white;
       }
 
-      header, .intro, .panel, .preview-note, footer {
+      header, .intro, .panel, .preview-note, .toggle-view-btn, footer {
         display: none !important;
       }
 
@@ -436,6 +472,178 @@
             <option value="night">غامض ومظلم</option>
           </select>
         </div>
+
+        <button id="resetBtn" class="secondary" type="button">
+          رجوع للتصميم الأساسي
+        </button>
+      </section>
+
+      <section class="preview-area">
+        <h3>معاينة الكارت</h3>
+
+        <button id="toggleSideBtn" class="toggle-view-btn" type="button">عرض ظهر الكارت 🔄</button>
+
+        <div class="card paper" id="card">
+          <!-- وجه الكارت -->
+          <div id="cardFront" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+            <div class="card-top">
+              <span class="card-number" id="previewNumber">01</span>
+              <span style="opacity:0.4">•</span>
+              <span class="card-collection" id="previewCollection">أسئلة جوانا</span>
+            </div>
+
+            <div class="card-middle">
+              <div class="card-logo">ليه؟</div>
+              <p class="card-question" id="previewQuestion">
+                إيه الحاجة اللي نفسك تفهميها عن نفسك؟
+              </p>
+              <p class="card-line" id="previewLine">
+                مش كل سؤال محتاج إجابة سريعة.
+              </p>
+            </div>
+
+            <div class="card-bottom">اسألي نفسك</div>
+          </div>
+
+          <!-- ظهر الكارت -->
+          <div id="cardBack" class="card-back">
+            <div class="back-brand">ليه؟</div>
+            <div class="back-divider"></div>
+            <div class="back-slogan">لكل سؤال حكاية</div>
+          </div>
+        </div>
+
+        <p class="preview-note">
+          دي معاينة تجريبية. التغييرات بتظهر فورًا، لكنها مش محفوظة
+          بعد إغلاق الصفحة في النسخة دي.
+        </p>
+
+        <button id="printBtn" type="button">طباعة أو حفظ كـ PDF</button>
+      </section>
+    </div>
+  </main>
+
+  <footer>لَيْه؟ — لكل سؤال حكاية</footer>
+
+  <script>
+    const palettes = {
+      burgundy: {
+        paper: "#eee0ca",
+        ink: "#451321",
+        accent: "#795548",
+        bg: "#e7dccb"
+      },
+      olive: {
+        paper: "#e9e1cd",
+        ink: "#3c4636",
+        accent: "#7a7352",
+        bg: "#dcdcc9"
+      },
+      brown: {
+        paper: "#f0e2cb",
+        ink: "#624334",
+        accent: "#98765b",
+        bg: "#e5d4bd"
+      },
+      night: {
+        paper: "#242321",
+        ink: "#eee0ca",
+        accent: "#b59a76",
+        bg: "#171615"
+      }
+    };
+
+    const $ = id => document.getElementById(id);
+
+    const card = $("card");
+    let showingFront = true;
+
+    function updateText() {
+      $("previewQuestion").textContent = $("question").value;
+      $("previewLine").textContent = $("line").value;
+      $("previewNumber").textContent =
+        String($("number").value || "01").padStart(2, "0");
+      $("previewCollection").textContent =
+        $("collection").value || "مجموعة جديدة";
+    }
+
+    function updatePalette(name) {
+      const p = palettes[name] || palettes.burgundy;
+
+      document.documentElement.style.setProperty("--paper", p.paper);
+      document.documentElement.style.setProperty("--ink", p.ink);
+      document.documentElement.style.setProperty("--accent", p.accent);
+      document.documentElement.style.setProperty("--bg", p.bg);
+
+      card.style.setProperty("--card-bg", p.paper);
+      card.style.setProperty("--card-ink", p.ink);
+      card.style.setProperty("--card-accent", p.accent);
+
+      $("paletteSelect").value = name;
+    }
+
+    function updateBackground() {
+      card.classList.remove("paper", "clean", "night");
+      card.classList.add($("backgroundSelect").value);
+    }
+
+    $("toggleSideBtn").addEventListener("click", () => {
+      showingFront = !showingFront;
+      if (showingFront) {
+        $("cardFront").style.display = "flex";
+        $("cardBack").style.display = "none";
+        $("toggleSideBtn").textContent = "عرض ظهر الكارت 🔄";
+      } else {
+        $("cardFront").style.display = "none";
+        $("cardBack").style.display = "flex";
+        $("toggleSideBtn").textContent = "عرض وجه الكارت 🔄";
+      }
+    });
+
+    ["question", "line", "number", "collection"].forEach(id => {
+      $(id).addEventListener("input", updateText);
+    });
+
+    $("paletteSelect").addEventListener("change", event => {
+      updatePalette(event.target.value);
+    });
+
+    document.querySelectorAll("[data-palette]").forEach(button => {
+      button.addEventListener("click", () => {
+        updatePalette(button.dataset.palette);
+      });
+    });
+
+    $("fontSelect").addEventListener("change", event => {
+      card.style.fontFamily = event.target.value;
+    });
+
+    $("backgroundSelect").addEventListener("change", updateBackground);
+
+    $("resetBtn").addEventListener("click", () => {
+      $("question").value = "إيه الحاجة اللي نفسك تفهميها عن نفسك؟";
+      $("line").value = "مش كل سؤال محتاج إجابة سريعة.";
+      $("number").value = "01";
+      $("collection").value = "أسئلة جوانا";
+      $("fontSelect").selectedIndex = 0;
+      $("backgroundSelect").value = "paper";
+      card.style.fontFamily = "Tahoma, Arial, sans-serif";
+      updatePalette("burgundy");
+      updateBackground();
+      updateText();
+    });
+
+    $("printBtn").addEventListener("click", () => {
+      window.print();
+    });
+
+    updateText();
+    updatePalette("burgundy");
+    updateBackground();
+  </script>
+</body>
+</html>
+    </div>
 
         <button id="resetBtn" class="secondary" type="button">
           رجوع للتصميم الأساسي
