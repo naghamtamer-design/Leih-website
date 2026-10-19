@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#eee0ca">
   <title>استوديو ليه؟ | تصميم الكروت</title>
 
-  <!-- استدعاء خط الرقعة العربي من Google Fonts -->
+  <!-- استدعاء خط الرقعة العربي من Google Fonts للأسئلة والنصوص -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
       margin: 0;
       color: var(--ink);
       background: var(--bg);
-      font-family: Tahoma, Arial, sans-serif;
+      font-family: 'Aref Ruqaa', Tahoma, Arial, sans-serif;
       transition: background .25s, color .25s;
     }
 
@@ -37,13 +37,14 @@
       border-bottom: 1px solid #45132130;
     }
 
-    .brand {
-      font-family: 'Aref Ruqaa', Georgia, serif;
-      font-size: 56px;
-      font-weight: bold;
-      letter-spacing: 0px;
-      margin: 0;
-      line-height: 1.2;
+    /* كلمة ليه بخط الرقعة الحر المائل المأخوذة من التصميم الأول */
+    .brand-svg {
+      width: 140px;
+      height: auto;
+      fill: var(--ink);
+      display: block;
+      margin: 0 auto;
+      transition: fill .25s;
     }
 
     .subtitle {
@@ -133,7 +134,7 @@
       font-size: 18px;
     }
 
-    /* تصميم الكارت الأفقي مع الإطار اليدوي */
+    /* الكارت الأفقي مع الإطار اليدوي */
     .card {
       --card-bg: #eee0ca;
       --card-ink: #451321;
@@ -146,7 +147,6 @@
       padding: 26px 32px;
       color: var(--card-ink);
       background: var(--card-bg);
-      /* إطار يشبه الرسم اليدوي بنقاط منحنية خفيفة */
       border: 2px dashed var(--card-ink);
       border-radius: 12px;
       position: relative;
@@ -159,7 +159,6 @@
       text-align: center;
     }
 
-    /* إطار داخلي رفيع لإعطاء عمق كلاسيكي هادئ */
     .card::before {
       content: "";
       position: absolute;
@@ -233,7 +232,7 @@
       letter-spacing: 2px;
     }
 
-    /* ظهر الكارت باللون الملون الخاص بالمجموعة */
+    /* ظهر الكارت بلون المجموعة مع كلمة "ليه؟" بخط الرقعة اليدوي الأول */
     .card-back {
       display: none;
       flex-direction: column;
@@ -260,12 +259,11 @@
       pointer-events: none;
     }
 
-    .back-brand {
-      font-family: 'Aref Ruqaa', Georgia, serif;
-      font-size: 60px;
-      font-weight: bold;
-      margin-bottom: 4px;
-      line-height: 1;
+    .card-back-logo-svg {
+      width: 150px;
+      height: auto;
+      fill: var(--card-bg);
+      margin-bottom: 6px;
     }
 
     .back-divider {
@@ -366,10 +364,6 @@
       .panel {
         padding: 15px;
       }
-
-      .brand {
-        font-size: 48px;
-      }
     }
 
     @media print {
@@ -400,7 +394,10 @@
 
 <body>
   <header>
-    <h1 class="brand">ليه؟</h1>
+    <!-- اللوجو اليدوي المائل المستوحى من التصميم الأول -->
+    <svg class="brand-svg" viewBox="0 0 200 90">
+      <text x="130" y="65" font-family="'Aref Ruqaa', serif" font-size="64" font-weight="bold" font-style="italic" transform="rotate(-6 100 45)">ليه؟</text>
+    </svg>
     <p class="subtitle">مساحة للأسئلة اللي جوانا</p>
   </header>
 
@@ -467,11 +464,10 @@
         <div class="field" style="margin-top:18px">
           <label for="fontSelect">الخط</label>
           <select id="fontSelect">
-            <option value="Tahoma, Arial, sans-serif">Tahoma — بسيط وواضح</option>
             <option value="'Aref Ruqaa', serif">رقعة يدوي — أصيل وفني</option>
+            <option value="Tahoma, Arial, sans-serif">Tahoma — بسيط وواضح</option>
             <option value="Georgia, serif">Georgia — كلاسيكي</option>
             <option value="'Courier New', monospace">Courier — كشكول قديم</option>
-            <option value="Arial, sans-serif">Arial — عصري</option>
           </select>
         </div>
 
@@ -514,9 +510,11 @@
             <div class="card-bottom">اسألي نفسك</div>
           </div>
 
-          <!-- ظهر الكارت باللون الداكن مع الخط الفاتح -->
+          <!-- ظهر الكارت بلون الحبر والخط اليدوي المائل -->
           <div id="cardBack" class="card-back">
-            <div class="back-brand">ليه؟</div>
+            <svg class="card-back-logo-svg" viewBox="0 0 200 90">
+              <text x="130" y="65" font-family="'Aref Ruqaa', serif" font-size="68" font-weight="bold" font-style="italic" transform="rotate(-6 100 45)">ليه؟</text>
+            </svg>
             <div class="back-divider"></div>
             <div class="back-slogan">لكل سؤال حكاية</div>
           </div>
@@ -636,7 +634,7 @@
       $("collection").value = "أسئلة جوانا";
       $("fontSelect").selectedIndex = 0;
       $("backgroundSelect").value = "paper";
-      card.style.fontFamily = "Tahoma, Arial, sans-serif";
+      card.style.fontFamily = "'Aref Ruqaa', serif";
       updatePalette("burgundy");
       updateBackground();
       updateText();
