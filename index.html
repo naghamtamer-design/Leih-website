@@ -144,7 +144,7 @@
       max-width: 440px;
       aspect-ratio: 7 / 5;
       margin: 0 auto;
-      padding: 18px 24px;
+      padding: 22px 28px;
       color: var(--card-ink);
       background: var(--card-bg);
       border: 1px solid var(--card-accent);
@@ -210,16 +210,18 @@
       opacity: .85;
     }
 
-    .card-logo {
-      font-family: 'Aref Ruqaa', Georgia, serif;
-      font-size: 32px;
-      font-weight: bold;
-      margin-bottom: 8px;
-      line-height: 1;
+    .card-middle {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      flex-grow: 1;
+      margin: 10px 0;
     }
 
+    /* تكبير السؤال وإعطائه المساحة كاملة */
     .card-question {
-      font-size: clamp(16px, 3.5vw, 22px);
+      font-size: clamp(18px, 4.2vw, 25px);
       line-height: 1.7;
       font-weight: bold;
       overflow-wrap: anywhere;
@@ -227,9 +229,9 @@
     }
 
     .card-line {
-      font-size: 12px;
+      font-size: 13px;
       line-height: 1.6;
-      margin: 10px 0 0;
+      margin: 12px 0 0;
       opacity: .85;
       overflow-wrap: anywhere;
     }
@@ -239,50 +241,64 @@
       letter-spacing: 2px;
     }
 
-    /* ظهر الكارت المميز */
+    /* ظهر الكارت الملّون بلون الخط الرئيسي للكارت */
     .card-back {
       display: none;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100%;
-      position: relative;
-      z-index: 1;
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: var(--card-ink);
+      color: var(--card-bg);
+      padding: 20px;
+    }
+
+    .card-back::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border: 1px solid var(--card-bg);
+      opacity: .4;
+      pointer-events: none;
     }
 
     .back-brand {
       font-family: 'Aref Ruqaa', Georgia, serif;
-      font-size: 54px;
+      font-size: 60px;
       font-weight: bold;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       line-height: 1;
     }
 
     .back-divider {
-      width: 40px;
+      width: 45px;
       height: 1px;
-      background: var(--card-accent);
-      opacity: 0.6;
-      margin: 8px 0;
+      background: var(--card-bg);
+      opacity: 0.5;
+      margin: 10px 0;
     }
 
     .back-slogan {
-      font-size: 11px;
-      letter-spacing: 1px;
-      opacity: 0.85;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      opacity: 0.9;
     }
 
     .toggle-view-btn {
       background: transparent;
       color: var(--ink);
       border: 1px solid var(--ink);
-      padding: 8px 12px;
+      padding: 8px 14px;
       border-radius: 6px;
       font-size: 12px;
       margin-bottom: 12px;
       cursor: pointer;
       width: auto;
       display: inline-block;
+      font-weight: bold;
     }
 
     .preview-note {
@@ -484,7 +500,7 @@
         <button id="toggleSideBtn" class="toggle-view-btn" type="button">عرض ظهر الكارت 🔄</button>
 
         <div class="card paper" id="card">
-          <!-- وجه الكارت -->
+          <!-- وجه الكارت (نظيف وبدون كلمة "ليه؟" ومساحة أكبر للسؤال) -->
           <div id="cardFront" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
             <div class="card-top">
               <span class="card-number" id="previewNumber">01</span>
@@ -493,7 +509,6 @@
             </div>
 
             <div class="card-middle">
-              <div class="card-logo">ليه؟</div>
               <p class="card-question" id="previewQuestion">
                 إيه الحاجة اللي نفسك تفهميها عن نفسك؟
               </p>
@@ -505,7 +520,7 @@
             <div class="card-bottom">اسألي نفسك</div>
           </div>
 
-          <!-- ظهر الكارت -->
+          <!-- ظهر الكارت (بلون الحبر الداكن مع كتابة بيج/كريمي) -->
           <div id="cardBack" class="card-back">
             <div class="back-brand">ليه؟</div>
             <div class="back-divider"></div>
@@ -599,153 +614,6 @@
         $("toggleSideBtn").textContent = "عرض وجه الكارت 🔄";
       }
     });
-
-    ["question", "line", "number", "collection"].forEach(id => {
-      $(id).addEventListener("input", updateText);
-    });
-
-    $("paletteSelect").addEventListener("change", event => {
-      updatePalette(event.target.value);
-    });
-
-    document.querySelectorAll("[data-palette]").forEach(button => {
-      button.addEventListener("click", () => {
-        updatePalette(button.dataset.palette);
-      });
-    });
-
-    $("fontSelect").addEventListener("change", event => {
-      card.style.fontFamily = event.target.value;
-    });
-
-    $("backgroundSelect").addEventListener("change", updateBackground);
-
-    $("resetBtn").addEventListener("click", () => {
-      $("question").value = "إيه الحاجة اللي نفسك تفهميها عن نفسك؟";
-      $("line").value = "مش كل سؤال محتاج إجابة سريعة.";
-      $("number").value = "01";
-      $("collection").value = "أسئلة جوانا";
-      $("fontSelect").selectedIndex = 0;
-      $("backgroundSelect").value = "paper";
-      card.style.fontFamily = "Tahoma, Arial, sans-serif";
-      updatePalette("burgundy");
-      updateBackground();
-      updateText();
-    });
-
-    $("printBtn").addEventListener("click", () => {
-      window.print();
-    });
-
-    updateText();
-    updatePalette("burgundy");
-    updateBackground();
-  </script>
-</body>
-</html>
-    </div>
-
-        <button id="resetBtn" class="secondary" type="button">
-          رجوع للتصميم الأساسي
-        </button>
-      </section>
-
-      <section class="preview-area">
-        <h3>معاينة الكارت</h3>
-
-        <div class="card paper" id="card">
-          <div class="card-top">
-            <div class="card-number" id="previewNumber">01</div>
-            <div class="card-collection" id="previewCollection">
-              أسئلة جوانا
-            </div>
-          </div>
-
-          <div class="card-middle">
-            <div class="card-logo">ليه؟</div>
-            <p class="card-question" id="previewQuestion">
-              إيه الحاجة اللي نفسك تفهميها عن نفسك؟
-            </p>
-            <p class="card-line" id="previewLine">
-              مش كل سؤال محتاج إجابة سريعة.
-            </p>
-          </div>
-
-          <div class="card-bottom">اسألي نفسك</div>
-        </div>
-
-        <p class="preview-note">
-          دي معاينة تجريبية. التغييرات بتظهر فورًا، لكنها مش محفوظة
-          بعد إغلاق الصفحة في النسخة دي.
-        </p>
-
-        <button id="printBtn" type="button">طباعة أو حفظ كـ PDF</button>
-      </section>
-    </div>
-  </main>
-
-  <footer>لَيْه؟ — لكل سؤال حكاية</footer>
-
-  <script>
-    const palettes = {
-      burgundy: {
-        paper: "#eee0ca",
-        ink: "#451321",
-        accent: "#795548",
-        bg: "#e7dccb"
-      },
-      olive: {
-        paper: "#e9e1cd",
-        ink: "#3c4636",
-        accent: "#7a7352",
-        bg: "#dcdcc9"
-      },
-      brown: {
-        paper: "#f0e2cb",
-        ink: "#624334",
-        accent: "#98765b",
-        bg: "#e5d4bd"
-      },
-      night: {
-        paper: "#242321",
-        ink: "#eee0ca",
-        accent: "#b59a76",
-        bg: "#171615"
-      }
-    };
-
-    const $ = id => document.getElementById(id);
-
-    const card = $("card");
-
-    function updateText() {
-      $("previewQuestion").textContent = $("question").value;
-      $("previewLine").textContent = $("line").value;
-      $("previewNumber").textContent =
-        String($("number").value || "01").padStart(2, "0");
-      $("previewCollection").textContent =
-        $("collection").value || "مجموعة جديدة";
-    }
-
-    function updatePalette(name) {
-      const p = palettes[name] || palettes.burgundy;
-
-      document.documentElement.style.setProperty("--paper", p.paper);
-      document.documentElement.style.setProperty("--ink", p.ink);
-      document.documentElement.style.setProperty("--accent", p.accent);
-      document.documentElement.style.setProperty("--bg", p.bg);
-
-      card.style.setProperty("--card-bg", p.paper);
-      card.style.setProperty("--card-ink", p.ink);
-      card.style.setProperty("--card-accent", p.accent);
-
-      $("paletteSelect").value = name;
-    }
-
-    function updateBackground() {
-      card.classList.remove("paper", "clean", "night");
-      card.classList.add($("backgroundSelect").value);
-    }
 
     ["question", "line", "number", "collection"].forEach(id => {
       $(id).addEventListener("input", updateText);
