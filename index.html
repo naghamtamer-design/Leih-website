@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#121212">
+  <meta name="theme-color" content="#0f0e0d">
   <title>لَيْه؟ — الإصدار الأول: ما وراء السؤال</title>
 
   <!-- Google Fonts: Aref Ruqaa & Amiri -->
@@ -18,7 +18,6 @@
       --burgundy: #451321;
       --olive: #3c4636;
       --navy: #1e293b;
-      --text-light: #eee0ca;
       --text-dark: #382018;
     }
 
@@ -32,7 +31,7 @@
       background-color: var(--bg-main);
       color: var(--paper);
       font-family: 'Amiri', serif;
-      padding: 20px 14px 60px;
+      padding: 30px 14px 60px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -41,14 +40,14 @@
 
     header {
       text-align: center;
-      margin: 30px 0 40px;
+      margin-bottom: 35px;
     }
 
     .site-brand {
       font-family: 'Aref Ruqaa', serif;
-      font-size: 58px;
+      font-size: 62px;
       color: var(--paper);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       line-height: 1.1;
     }
 
@@ -56,29 +55,17 @@
       font-size: 14px;
       letter-spacing: 1.5px;
       opacity: 0.75;
+      margin-bottom: 12px;
     }
 
-    .view-toggle {
-      margin-bottom: 25px;
-      display: flex;
-      gap: 10px;
-    }
-
-    .view-btn {
-      background: transparent;
-      border: 1px solid var(--paper);
-      color: var(--paper);
+    .instruction-note {
+      font-size: 13px;
+      color: #b59a76;
+      background: rgba(238, 224, 202, 0.08);
       padding: 8px 18px;
       border-radius: 20px;
-      font-family: inherit;
-      font-size: 13px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-
-    .view-btn.active, .view-btn:hover {
-      background: var(--paper);
-      color: var(--bg-main);
+      display: inline-block;
+      border: 1px dashed rgba(238, 224, 202, 0.25);
     }
 
     .deck-container {
@@ -86,39 +73,108 @@
       max-width: 480px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 22px;
     }
 
-    /* كروت العرض */
-    .card-item {
+    /* حاوية الكارت مع حافة ثلاثية الأبعاد للقلب */
+    .card-wrapper {
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      min-height: 200px;
+      transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+      transform-style: preserve-3d;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    /* حالة القَلْب عند الضغط */
+    .card-wrapper.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    /* الوجه والظهر داخل الكارت */
+    .card-front-face, .card-back-face {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
       border-radius: 16px;
       padding: 24px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* الظهر (الوجه الظاهر أولاً) */
+    .card-back-face {
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .card-back-logo {
+      font-family: 'Aref Ruqaa', serif;
+      font-size: 54px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .card-back-divider {
+      width: 42px;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.4;
+      margin: 8px 0;
+    }
+
+    .card-back-tagline {
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      opacity: 0.85;
+    }
+
+    .card-back-hint {
+      position: absolute;
+      bottom: 12px;
+      font-size: 10px;
+      opacity: 0.5;
+      letter-spacing: 1px;
+    }
+
+    /* الوجه (مكان السؤال) */
+    .card-front-face {
+      transform: rotateY(180deg);
       position: relative;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-      transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .card-item:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 35px rgba(0,0,0,0.6);
-    }
-
-    /* أنماط ألوان الكروت التبادلية */
+    /* أنماط ألوان الكروت */
     .theme-burgundy {
       background-color: var(--burgundy);
       color: var(--paper);
+      border: 1px solid rgba(238, 224, 202, 0.15);
     }
     .theme-paper {
       background-color: var(--paper);
       color: var(--text-dark);
+      border: 1px solid rgba(69, 19, 33, 0.15);
     }
     .theme-olive {
       background-color: var(--olive);
       color: var(--paper);
+      border: 1px solid rgba(238, 224, 202, 0.15);
     }
     .theme-navy {
       background-color: var(--navy);
       color: var(--paper);
+      border: 1px solid rgba(238, 224, 202, 0.15);
     }
 
     .card-header-meta {
@@ -127,15 +183,7 @@
       align-items: center;
       font-size: 13px;
       opacity: 0.8;
-      margin-bottom: 14px;
-    }
-
-    .card-icon {
-      font-size: 14px;
-    }
-
-    .card-number-badge {
-      letter-spacing: 1px;
+      margin-bottom: 12px;
     }
 
     .card-subtitle-title {
@@ -159,37 +207,6 @@
       line-height: 1.6;
     }
 
-    /* ظهر الكارت */
-    .card-back-view {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 220px;
-      text-align: center;
-    }
-
-    .card-back-logo {
-      font-family: 'Aref Ruqaa', serif;
-      font-size: 52px;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-
-    .card-back-divider {
-      width: 40px;
-      height: 1px;
-      background: currentColor;
-      opacity: 0.4;
-      margin: 8px 0;
-    }
-
-    .card-back-tagline {
-      font-size: 12px;
-      letter-spacing: 1px;
-      opacity: 0.85;
-    }
-
     footer {
       margin-top: 50px;
       text-align: center;
@@ -204,6 +221,9 @@
       .card-main-question {
         font-size: 16px;
       }
+      .card-inner {
+        min-height: 220px;
+      }
     }
   </style>
 </head>
@@ -213,15 +233,11 @@
   <header>
     <h1 class="site-brand">لَيْه؟</h1>
     <p class="site-subtitle">الإصدار الأول: ما وراء السؤال</p>
+    <div class="instruction-note">✨ اضغطي على أي كارت لاكتشاف السؤال</div>
   </header>
 
-  <div class="view-toggle">
-    <button class="view-btn active" onclick="showFronts()">وجه الكروت (الأسئلة)</button>
-    <button class="view-btn" onclick="showBacks()">ظهر الكروت (الهوية)</button>
-  </div>
-
   <main class="deck-container" id="deckContainer">
-    <!-- سينشئ الجافاسكريبت الكروت الثلاثين هنا تلقائياً -->
+    <!-- سينشئ الجافاسكريبت الكروت هنا -->
   </main>
 
   <footer>
@@ -273,56 +289,49 @@
       { num: "30", group: "قبل ما تقفل الكشكول", title: "المواجهة الأخيرة", icon: "🏁", q: "إنت بتهرب من إيه النهارده، وإيه اللي ممكن يحصل لو بطلت تهرب؟", hint: "«الهروب بيتعب أكتر من المواجهة.»", theme: "theme-navy" }
     ];
 
-    let isFrontView = true;
-
-    function renderDeck() {
+    function renderInteractiveDeck() {
       const container = document.getElementById("deckContainer");
       container.innerHTML = "";
 
       questionsData.forEach(item => {
-        const card = document.createElement("div");
-        card.className = `card-item ${item.theme}`;
+        const wrapper = document.createElement("div");
+        wrapper.className = "card-wrapper";
 
-        if (isFrontView) {
-          card.innerHTML = `
-            <div class="card-header-meta">
-              <span class="card-icon">${item.icon}</span>
-              <span class="card-number-badge">${item.num} / 30</span>
-            </div>
-            <div class="card-subtitle-title">${item.num} — ${item.title}</div>
-            <div class="card-main-question">${item.q}</div>
-            <div class="card-reflection-line">${item.hint}</div>
-          `;
-        } else {
-          card.innerHTML = `
-            <div class="card-back-view">
+        wrapper.innerHTML = `
+          <div class="card-inner">
+            <!-- ظهر الكارت (يظهر أولاً) -->
+            <div class="card-back-face ${item.theme}">
               <div class="card-back-logo">ليه؟</div>
               <div class="card-back-divider"></div>
               <div class="card-back-tagline">لكل سؤال حكاية</div>
+              <div class="card-back-hint">انقري للكشف ✦</div>
             </div>
-          `;
-        }
 
-        container.appendChild(card);
+            <!-- وجه الكارت (يظهر بعد القَلْب) -->
+            <div class="card-front-face ${item.theme}">
+              <div>
+                <div class="card-header-meta">
+                  <span class="card-icon">${item.icon}</span>
+                  <span class="card-number-badge">${item.num} / 30</span>
+                </div>
+                <div class="card-subtitle-title">${item.num} — ${item.title}</div>
+                <div class="card-main-question">${item.q}</div>
+              </div>
+              <div class="card-reflection-line">${item.hint}</div>
+            </div>
+          </div>
+        `;
+
+        // إمكانية النقر لقَلب الكارت وإرجاعه
+        wrapper.addEventListener("click", () => {
+          wrapper.classList.toggle("flipped");
+        });
+
+        container.appendChild(wrapper);
       });
     }
 
-    function showFronts() {
-      isFrontView = true;
-      document.querySelectorAll(".view-btn")[0].classList.add("active");
-      document.querySelectorAll(".view-btn")[1].classList.remove("active");
-      renderDeck();
-    }
-
-    function showBacks() {
-      isFrontView = false;
-      document.querySelectorAll(".view-btn")[1].classList.add("active");
-      document.querySelectorAll(".view-btn")[0].classList.remove("active");
-      renderDeck();
-    }
-
-    // التشغيل الأولي
-    renderDeck();
+    renderInteractiveDeck();
   </script>
 </body>
 </html>
